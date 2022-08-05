@@ -19,16 +19,52 @@ class Grid:
                 self.grid_array[x][y] = random.randint(0,1)
 
 
-    def Conway(self, off_color, on_color, surface, pause):
+    def Conway(self, off_color, on_color, surface, pause, player):
         for x in range(self.rows):
             for y in range(self.columns):
-                y_pos = y * self.scale
-                x_pos = x * self.scale
-                #random_color = (random.randint(10, 255), random.randint(10, 255), random.randint(10, 255))
-                if self.grid_array[x][y] == 1:
-                    pygame.draw.rect(surface, on_color, [x_pos, y_pos, self.scale-self.offset, self.scale-self.offset])
+                if(player == -1):
+                    y_pos = y * self.scale
+                    x_pos = x * self.scale
+                    #random_color = (random.randint(10, 255), random.randint(10, 255), random.randint(10, 255))
+                    if self.grid_array[x][y] == 1:
+                        pygame.draw.rect(surface, on_color, [x_pos, y_pos, self.scale-self.offset, self.scale-self.offset])
+                    else:
+                        pygame.draw.rect(surface, off_color, [x_pos, y_pos, self.scale-self.offset, self.scale-self.offset])
+                elif(player == 2):
+                    y_pos = y * self.scale
+                    x_pos = x * self.scale
+                    if(x < 10):
+                        pygame.draw.rect(surface, on_color, [x_pos, y_pos, self.scale-self.offset, self.scale-self.offset])
+                    elif self.grid_array[x][y] == 1:
+                        pygame.draw.rect(surface, on_color, [x_pos, y_pos, self.scale-self.offset, self.scale-self.offset])
+                    else:
+                        pygame.draw.rect(surface, off_color, [x_pos, y_pos, self.scale-self.offset, self.scale-self.offset])
+
                 else:
-                    pygame.draw.rect(surface, off_color, [x_pos, y_pos, self.scale-self.offset, self.scale-self.offset])
+                    oijxc = 5/0
+
+
+        def check_winner(self):
+            player_1_count = 0
+            player_2_count = 0
+            
+            for x in range(self.rows):
+                for y in range(self.columns):
+                    if self.grid_array[x][y] == 1 and x < 10:
+                        player_1_count += 1
+        
+            for x in range(self.rows):
+                for y in range(self.columns):
+                    if self.grid_array[x][y] == 1 and x > self.columns - 10:
+                        player_2_count += 1
+
+            if player_1_count > player_2_count:
+                return 1
+            elif player_2_count > player_1_count:
+                return 2
+            else:
+                return 0
+
 
         next = np.ndarray(shape=(self.size))
         if pause == False:
